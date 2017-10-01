@@ -12,6 +12,8 @@ var ball;
 var paddle;
 var bricks;
 var score =0;
+var bonusScore =0 ;
+var numberOfBricksHit = 0;
 var lives = 3;
 
 var spaceKey;
@@ -29,6 +31,7 @@ var incomingJson = // or socket data
 var scoreText;
 var livesText;
 var introText;
+var bonusText;
 var cursors;
 
 
@@ -87,6 +90,7 @@ function create() {
 
     scoreText = game.add.text(32, 550, 'score: 0', { font: "20px Arial", fill: "#ffffff", align: "left" });
     livesText = game.add.text(680, 550, 'lives: 3', { font: "20px Arial", fill: "#ffffff", align: "left" });
+    bonusText = game.add.text(400, 550, 'bonusscore: 0', { font: "20px Arial", fill: "#ffffff", align: "left" });
     introText = game.add.text(game.world.centerX, 400, '- press SPACE to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
     introText.anchor.setTo(0.5, 0.5);
 
@@ -109,7 +113,6 @@ function update() {
         if (ballOnPaddle)
         {
             ball.body.x = paddle.x;
-            ball.body.y = paddle.y;
         }
 
     }
@@ -119,27 +122,9 @@ function update() {
         if (ballOnPaddle)
         {
             ball.body.x = paddle.x;
-            ball.body.y = paddle.y;
         }
     }
-    else if (cursors.up.isDown)
-    {
-        paddle.y -= 7;
-        if (ballOnPaddle)
-        {
-            ball.body.x = paddle.x;
-            ball.body.y = paddle.y;
-        }
-    }
-    else if (cursors.down.isDown)
-    {
-        paddle.y += 7;
-        if (ballOnPaddle)
-        {
-            ball.body.x = paddle.x;
-            ball.body.y = paddle.y;
-        }
-    }
+
 
     game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this); // null -> callback, this = context
     game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
@@ -162,6 +147,7 @@ function releaseBall() {
 function ballLost() {
     lives--;
     livesText.text = `lives: ${lives}`;
+    numberOfBricksHit = 0;
 
     if (lives === 0)
     {
@@ -187,8 +173,18 @@ function gameOver () {
 function ballHitBrick(_ball, _brick) {
     _brick.kill(); // removes brick from bricks
     score += 10;
+    numberOfBricksHit++;
 
     scoreText.text = `score ${score}`;
+
+    if (numberOfBricksHit > 3)
+    {
+        bonusScore += 5;
+        bonusText.text = `bonusscore ${bonusScore}`;
+        score += bonusScore;
+
+    }
+
 
     if (bricks.countLiving() === 0)
     {
