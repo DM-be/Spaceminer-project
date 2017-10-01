@@ -15,13 +15,9 @@ var score =0;
 var bonusScore =0 ;
 var numberOfBricksHit = 0;
 var lives = 3;
-
 var spaceKey;
-
 var ballOnPaddle = true;
-
 var canvas; //
-
 var incomingJson = // or socket data
     {
         numberOfBricks: 15,
@@ -40,12 +36,8 @@ function create() {
 
 
     game.physics.startSystem(Phaser.Physics.ARCADE); // start physics library
-
     game.physics.arcade.checkCollision.down = false; // check collisions against walls except bottom
-
-
     canvas = game.add.tileSprite(0,0, 800,600, 'space'); // paint the canvas
-
 
     // start making the bricks
     bricks = game.add.group(); // phaser lets you group objects - docs for extra methods
@@ -149,6 +141,7 @@ function ballLost() {
     livesText.text = `lives: ${lives}`;
     numberOfBricksHit = 0;
     bonusScore = 0;
+    bonusText = `bonusscore: ${bonusScore}`;
 
     if (lives === 0)
     {
