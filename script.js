@@ -73,7 +73,7 @@ function create() {
 
     // make the ball
 
-    ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'breakout', 'ball_1.png'); // TO DO
+    ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'breakout', 'ball_1.png');
     ball.anchor.setTo(0.5,0.5);
     ball.checkWorldBounds = true; // https://phaser.io/docs/2.3.0/Phaser.Component.InWorld.html
 
@@ -87,7 +87,7 @@ function create() {
 
     scoreText = game.add.text(32, 550, 'score: 0', { font: "20px Arial", fill: "#ffffff", align: "left" });
     livesText = game.add.text(680, 550, 'lives: 3', { font: "20px Arial", fill: "#ffffff", align: "left" });
-    introText = game.add.text(game.world.centerX, 400, '- click to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
+    introText = game.add.text(game.world.centerX, 400, '- press SPACE to start -', { font: "40px Arial", fill: "#ffffff", align: "center" });
     introText.anchor.setTo(0.5, 0.5);
 
     spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
