@@ -148,6 +148,7 @@ function ballLost() {
     lives--;
     livesText.text = `lives: ${lives}`;
     numberOfBricksHit = 0;
+    bonusScore = 0;
 
     if (lives === 0)
     {
