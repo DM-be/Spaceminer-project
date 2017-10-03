@@ -140,13 +140,17 @@ const ballHitPaddle = (_ball, _paddle) => {
 
         difference = _paddle.x - _ball.x;
         _ball.body.velocity.x = (-10 * difference);
+        console.log("left: " + _ball.body.velocity.x)
     }
     else if (_ball.x > _paddle.x) // ball is right of paddle
     {
+        difference = _ball.x - paddle.x;
         _ball.body.velocity.x = (10 * difference);
+        console.log("right: " + _ball.body.velocity.x)
     }
     else { // ball in exact middle --> random x to prevent bouncing straight up
         _ball.body.velocity.x = 2 + Math.random() * 8 ;
+        console.log("dead center: " + _ball.body.velocity.x)
 
     }
 };
