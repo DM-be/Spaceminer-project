@@ -24,7 +24,15 @@ var cursors;
 function preload() {
 
     game.load.atlas('breakout', 'breakout.png', 'breakout.json');
-    game.load.image('space', 'space.gif');
+    game.load.image('space', 'space.png');
+    game.load.image('brick0', 'brick0.png');
+    game.load.image('brick1', 'brick1.png');
+    game.load.image('brick2', 'brick2.png');
+    game.load.image('brick3', 'brick3.png');
+    game.load.image('brick4', 'brick4.png');
+    game.load.image('brick5', 'brick5.png');
+    game.load.image('paddle', 'paddle.png');
+    game.load.image('ball', 'ball.png');
 }
 
 function create() {
@@ -155,7 +163,8 @@ const makeBricks = () => {
     {
         for (var x = 0; x< incomingJson.numberOfBricks; x++)
         {
-            var brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y+1) + '_1.png');  // x - y - png
+            var sort = Math.floor((Math.random() *6) + 0)
+            var brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'brick' + sort, 'brick'+ sort+'.png');  // x - y - png
             brick.body.bounce.set(1); // The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
             brick.body.immovable = true; // An immovable Body will not receive any impacts from other bodies.
         }
@@ -165,7 +174,7 @@ const makeBricks = () => {
 
 const makePaddle = (sprite) => {
 
-    paddle = game.add.sprite(game.world.centerX, 500, 'breakout', `${sprite}`);// add sprite on x and y
+    paddle = game.add.sprite(game.world.centerX, 500, 'paddle', 'paddle.png');// add sprite on x and y
     paddle.anchor.setTo(0.5,0.5); // set position of the texture relative to xy ----> centers texture to object http://www.goodboydigital.com/pixijs/docs/classes/Sprite.html#property_pivot
     game.physics.enable(paddle, Phaser.Physics.ARCADE); // enables the physics onto the paddle
     paddle.body.collideWorldBounds = true;
@@ -176,13 +185,13 @@ const makePaddle = (sprite) => {
 
 const makeBall = (sprite) =>
 {
-    ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'breakout', `${sprite}`); // TO DO
+    ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'ball', "ball.png"); // TO DO
     ball.anchor.setTo(0.5,0.5);
     ball.checkWorldBounds = true; // https://phaser.io/docs/2.3.0/Phaser.Component.InWorld.html
     game.physics.enable(ball, Phaser.Physics.ARCADE);
     ball.body.collideWorldBounds = true;
     ball.body.bounce.set(1);
-    ball.animations.add('spin', [ 'ball_1.png', 'ball_2.png', 'ball_3.png', 'ball_4.png', 'ball_5.png' ], 50, true, false) // we can call this with .play later
+    ball.animations.add('spin', [ 'ball.png', 'ball.png', 'ball.png', 'ball.png', 'ball.png' ], 50, true, false) // we can call this with .play later
     ball.events.onOutOfBounds.add(ballLost, this); // ball drops below bottom -  triggers onOutOfBounds --> reset it
 };
 

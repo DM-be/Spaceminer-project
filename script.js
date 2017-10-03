@@ -6,6 +6,7 @@ function preload() {
 
     game.load.atlas('breakout', 'breakout.png', 'breakout.json');
     game.load.image('space', 'space.gif');
+    game.load.image('brick0', 'brick0.png');
 }
 
 var ball;
@@ -50,7 +51,7 @@ function create() {
         {
             for (var x = 0; x< incomingJson.numberOfBricks; x++)
             {
-                var brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y+1) + '_1.png');  // x - y - png
+                var brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick0.png');  // x - y - png
                 brick.body.bounce.set(1); // The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
                 brick.body.immovable = true; // An immovable Body will not receive any impacts from other bodies.
             }
