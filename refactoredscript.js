@@ -190,6 +190,8 @@ const makeBall = (sprite) =>
     ball.checkWorldBounds = true; // https://phaser.io/docs/2.3.0/Phaser.Component.InWorld.html
     game.physics.enable(ball, Phaser.Physics.ARCADE);
     ball.body.collideWorldBounds = true;
+    ball.body.isCircle = true;
+    ball.body.setCircle();
     ball.body.bounce.set(1);
     ball.animations.add('spin', [ 'ball.png', 'ball.png', 'ball.png', 'ball.png', 'ball.png' ], 50, true, false) // we can call this with .play later
     ball.events.onOutOfBounds.add(ballLost, this); // ball drops below bottom -  triggers onOutOfBounds --> reset it
