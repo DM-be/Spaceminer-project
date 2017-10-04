@@ -103,12 +103,13 @@ const gameOver = () => {
 
 
 const ballHitBrick = (_ball, _brick) => {
-    console.log(_brick.health);
     if (_brick.health > 1) {
-        _brick.health = 1;
+        _brick.kill();
         _brick = bricks.create(_brick.position.x, _brick.position.y, 'brick4_2', 'brick4_2.png');
         _brick.body.bounce.set(1); // The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
         _brick.body.immovable = true; // An immovable Body will not receive any impacts from other bodies.
+        _brick.health = 1;
+        console.log(_brick.health);
     } else {
         _brick.kill();
     }
