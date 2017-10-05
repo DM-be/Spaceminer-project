@@ -24,7 +24,8 @@ var cursors;
 function preload() {
 
     game.load.atlas('breakout', 'breakout.png', 'breakout.json');
-    game.load.image('space', 'space.png');
+    game.load.atlas('breakout2', 'arkinoid.png', 'breakout2.json');
+    game.load.image('space', 'asteroid.png');
     game.load.image('brick0', 'brick0.png');
     game.load.image('brick1', 'brick1.png');
     game.load.image('brick2', 'brick2.png');
@@ -39,6 +40,10 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE); // start physics library
     game.physics.arcade.checkCollision.down = false; // check collisions against walls except bottom
     canvas = game.add.tileSprite(0,0, 800,600, 'space'); // paint the canvas
+   //  canvas = game.add.sprite(0,0 , 'space');
+   //  canvas.width = game.width;
+   //  canvas.height = game.height;
+
     makeBricks();
     makePaddle('paddle_big.png'); // from atlas
     makeBall('ball_1.png');
@@ -167,7 +172,7 @@ const makeBricks = () => {
     {
         for (var x = 0; x< incomingJson.numberOfBricks; x++)
         {
-            var sort = Math.floor((Math.random() *6) + 0)
+            var sort = Math.floor((Math.random() *6) + 0);
             var brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'brick' + sort, 'brick'+ sort+'.png');  // x - y - png
             brick.body.bounce.set(1); // The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
             brick.body.immovable = true; // An immovable Body will not receive any impacts from other bodies.
@@ -178,7 +183,7 @@ const makeBricks = () => {
 
 const makePaddle = (sprite) => {
 
-    paddle = game.add.sprite(game.world.centerX, 500, 'paddle', 'paddle.png');// add sprite on x and y
+    paddle = game.add.sprite(game.world.centerX, 500, 'breakout2', 'paddle_ark.png');// add sprite on x and y
     paddle.anchor.setTo(0.5,0.5); // set position of the texture relative to xy ----> centers texture to object http://www.goodboydigital.com/pixijs/docs/classes/Sprite.html#property_pivot
     game.physics.enable(paddle, Phaser.Physics.ARCADE); // enables the physics onto the paddle
     paddle.body.collideWorldBounds = true;
