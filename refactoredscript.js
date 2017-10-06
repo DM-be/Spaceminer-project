@@ -62,6 +62,7 @@ function update() {
     }
     game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this); // null -> callback, this = context
     game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
+
 }
 
 /*** GAME LOGIC **/
@@ -103,6 +104,7 @@ const gameOver = () => {
 
 
 const ballHitBrick = (_ball, _brick) => {
+    console.log(_brick.sort);
     if (_brick.health > 1) {
         _brick.kill();
         _brick = bricks.create(_brick.position.x, _brick.position.y, 'brick4_2', 'brick4_2.png');
@@ -167,9 +169,11 @@ const makeBricks = () => {
     bricks.physicsBodyType = Phaser.Physics.ARCADE; // does the same for groups as game.physics.enable
     for (var y = 0; y < incomingJson.numberOfRows; y++) {
         for (var x = 0; x < incomingJson.numberOfBricks; x++) {
-            // var sort = Math.floor((Math.random() * 6) + 0);
-            var sort = 4;
-            var brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'brick' + sort, 'brick' + sort + '.png');  // x - y - png
+            var sort = Math.floor((Math.random() * 5) + 0);
+
+            brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'brick' + sort, 'brick' + sort + '.png');  // x - y - png
+            // var sort = 5;
+
             brick.body.bounce.set(1); // The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
             brick.body.immovable = true; // An immovable Body will not receive any impacts from other bodies.
             if (sort == 4) {
