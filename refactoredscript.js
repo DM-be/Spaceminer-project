@@ -24,7 +24,8 @@ var cursors;
 function preload() {
 
     game.load.atlas('breakout', 'breakout.png', 'breakout.json');
-    game.load.image('space', 'space.png');
+    game.load.atlas('breakout2', 'arkinoid.png', 'breakout2.json');
+    game.load.image('space', 'asteroid.png');
     game.load.image('brick0', 'brick0.png');
     game.load.image('brick1', 'brick1.png');
     game.load.image('brick2', 'brick2.png');
@@ -39,7 +40,11 @@ function preload() {
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE); // start physics library
     game.physics.arcade.checkCollision.down = false; // check collisions against walls except bottom
-    canvas = game.add.tileSprite(0, 0, 800, 600, 'space'); // paint the canvas
+
+    canvas = game.add.tileSprite(0,0, 800,600, 'space'); // paint the canvas
+   //  canvas = game.add.sprite(0,0 , 'space');
+   //  canvas.width = game.width;
+   //  canvas.height = game.height;
     makeBricks();
     makePaddle('paddle_big.png'); // from atlas
     makeBall('ball_1.png');
@@ -167,6 +172,7 @@ const makeBricks = () => {
     bricks = game.add.group(); // phaser lets you group objects - docs for extra methods
     bricks.enableBody = true; // enables a body to allow collision
     bricks.physicsBodyType = Phaser.Physics.ARCADE; // does the same for groups as game.physics.enable
+
     for (var y = 0; y < incomingJson.numberOfRows; y++) {
         for (var x = 0; x < incomingJson.numberOfBricks; x++) {
             var sort = Math.floor((Math.random() * 5) + 0);
@@ -186,8 +192,9 @@ const makeBricks = () => {
 
 const makePaddle = (sprite) => {
 
-    paddle = game.add.sprite(game.world.centerX, 500, 'paddle', 'paddle.png');// add sprite on x and y
-    paddle.anchor.setTo(0.5, 0.5); // set position of the texture relative to xy ----> centers texture to object http://www.goodboydigital.com/pixijs/docs/classes/Sprite.html#property_pivot
+
+    paddle = game.add.sprite(game.world.centerX, 500, 'breakout2', 'paddle_ark.png');// add sprite on x and y
+    paddle.anchor.setTo(0.5,0.5); // set position of the texture relative to xy ----> centers texture to object http://www.goodboydigital.com/pixijs/docs/classes/Sprite.html#property_pivot
     game.physics.enable(paddle, Phaser.Physics.ARCADE); // enables the physics onto the paddle
     paddle.body.collideWorldBounds = true;
     paddle.body.bounce.set(1);
