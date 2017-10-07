@@ -25,7 +25,7 @@ function preload() {
 
     game.load.atlas('breakout', 'breakout.png', 'breakout.json');
     game.load.atlas('breakout2', 'arkinoid.png', 'breakout2.json');
-    game.load.image('space', 'asteroid.png');
+    game.load.image('space', 'snesbg.png');
     game.load.image('brick0', 'brick0.png');
     game.load.image('brick1', 'brick1.png');
     game.load.image('brick2', 'brick2.png');
