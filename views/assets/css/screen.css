@@ -1,0 +1,40 @@
+body{
+    background: url("../images/bg.jpg") no-repeat fixed;
+    min-height:100%;
+    /*background-attachment:scroll;*/
+    background-position:bottom center, bottom right;
+
+    font-family: 'Stalinist One', cursive;
+    color: white;
+    text-align: center;
+}
+h1{
+    font-size: 3rem;
+}
+a{
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    line-height: 4rem;
+    display: inline-block;
+    width: 600px;
+    vertical-align: top;
+}
+#mainMenu a:hover{
+    font-size:3rem;
+}
+video{
+    display: block;
+    margin: 10px auto 50px auto;
+}
+
+/***********************************************************************************************************************
+                                        level
+***********************************************************************************************************************/
+.hidden{
+ display: none;
+}
+#game canvas{
+    margin-right: auto;
+    margin-left: auto;
+}

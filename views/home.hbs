@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <title>Space Breakout</title>
+    <link rel="stylesheet" href="/views/assets/css/screen.css">
+    <link href="https://fonts.googleapis.com/css?family=Stalinist+One" rel="stylesheet">
     <script type="text/javascript" src="/phaser.js"></script>
     <style type="text/css">
         body {
@@ -18,23 +20,19 @@
 </head>
 <body>
 
-
-<main>
+<div id="mainMenu"><h1>Space Snes Breakout</h1>
+<video height="350" autoplay loop muted>
+    <source src="/views/assets/images/gradius III - Intro.mp4" type="video/mp4">
+</video>
+<a href="#" id="singleplayer">Single Player</a><a href="#">Multi Player</a>
+</div>
+<div id="game" class="hidden">
     <div id="gameDiv"></div>
+</div>
 
-</main>
-
-
-
-
-
-
-
-
-<script type="text/javascript" src="/refactoredscript.js">
-
-
-</script>
+<script type="text/javascript" src="/views/assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/views/assets/js/script.js"></script>
+<script type="text/javascript" src="/refactoredscript.js"></script>
 
 </body>
 </html>
