@@ -1,6 +1,7 @@
 /**
  * Created by Mathias Standaert on 7/10/2017.
  */
+var paused = true;
 var singleplayer = function (e) {
     e.preventDefault();
     soundClick();
@@ -20,4 +21,17 @@ var soundClick = function () {
 $(document).ready(function () {
     $('#singleplayer').on('click',singleplayer);
     $('.levelx.active').on('click',startGame);
+
+    $("body").keypress(function (e) {
+        var  key = window.event.keyCode;;
+        if(key === 109){
+            if(paused){
+                $('audio')[0].play();
+                paused = false;
+            }else{
+                $('audio')[0].pause();
+                paused = true;
+            }
+        }
+    });
 });
