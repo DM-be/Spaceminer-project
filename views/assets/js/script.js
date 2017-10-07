@@ -4,9 +4,15 @@
 var singleplayer = function (e) {
     e.preventDefault();
     $('#mainMenu').addClass("hidden");
-    $('#game').removeClass("hidden");
+    $('#levelpicker').removeClass("hidden");
     $('video').prop('muted', true);
 };
+var startGame = function (e) {
+    e.preventDefault();
+    $('#levelpicker').addClass("hidden");
+    $('#game').removeClass("hidden");
+}
 $(document).ready(function () {
-    $('#singleplayer').on('click',singleplayer)
+    $('#singleplayer').on('click',singleplayer);
+    $('.levelx.active').on('click',startGame);
 });

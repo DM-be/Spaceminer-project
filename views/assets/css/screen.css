@@ -11,7 +11,7 @@ body{
 h1{
     font-size: 3rem;
 }
-a{
+#mainMenu a{
     color: white;
     text-decoration: none;
     font-size: 2rem;
@@ -26,6 +26,40 @@ a{
 video{
     display: block;
     margin: 10px auto 50px auto;
+}
+/***********************************************************************************************************************
+                                        levelpicker
+***********************************************************************************************************************/
+#levelpicker h1 {
+    margin-bottom: 100px;
+    font-size: 3rem;
+}
+#levelpicker .levelx{
+    cursor: default;
+}
+#levelpicker figure {
+    display: inline-block;
+    transition: 0.3s ease;
+}
+#levelpicker figure, figure img {
+    width: 300px;
+}
+
+#levelpicker figcaption {
+    font-size: 2rem;
+    position: relative;
+    top:-180px;
+}
+
+#levelpicker a {
+    text-decoration: none;
+    color: white;
+}
+#levelpicker .active{
+    cursor: auto;
+}
+#levelpicker .active:hover img, .active:hover figcaption{
+    transform: scale(1.5, 1.5);
 }
 
 /***********************************************************************************************************************
