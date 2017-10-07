@@ -217,11 +217,11 @@ const makeBall = (sprite) => {
 
 //TODO how to decide what text we render, maybe pass in arguments
 const createText = () => {
-    scoreText = game.add.text(32, 550, 'score: 0', {font: "20px Arial", fill: "#ffffff", align: "left"});
-    livesText = game.add.text(680, 550, 'lives: 3', {font: "20px Arial", fill: "#ffffff", align: "left"});
-    bonusText = game.add.text(400, 550, 'bonusscore: 0', {font: "20px Arial", fill: "#ffffff", align: "left"});
+    scoreText = game.add.text(32, 550, 'score: 0', {font: "16px Stalinist One", fill: "#ffffff", align: "left"});
+    livesText = game.add.text(680, 550, 'lives: 3', {font: "16px Stalinist One", fill: "#ffffff", align: "left"});
+    bonusText = game.add.text(400, 550, 'bonusscore: 0', {font: "16px Stalinist One", fill: "#ffffff", align: "left"});
     introText = game.add.text(game.world.centerX, 400, '- press SPACE to start -', {
-        font: "40px Arial",
+        font: "30px Stalinist One",
         fill: "#ffffff",
         align: "center"
     });
