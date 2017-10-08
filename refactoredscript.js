@@ -32,12 +32,13 @@ var livesText;
 var introText;
 var bonusText;
 var cursors;
+var pKey;
+var pauseText;
 
 
 
 
-
-var level = "Level 1";
+var level = "1";
 
 var fontObject = {
 
@@ -76,34 +77,49 @@ const loadState = {
         game.load.image('ball', 'ball.png');
     },
     create: () =>  {
-        game.state.start('mainMenu')
+        game.state.start('levelMenu')
     }
 };
 
-var mainMenuState = {
+var levelMenuState = {
     create: () =>  {
-        game.add.text(game.x,game.y, `level: ${level}, this is a placeholder press P to exit this state`, fontObject);
-        const pKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
-        pKey.onDown.addOnce(mainMenuState.start, this);
+        game.add.text(game.x,game.y, `level: ${level}, press S to start`, fontObject);
+        const sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
+        sKey.onDown.addOnce(levelMenuState.start, this);
 
     },
-    start: () => {
-        game.state.start('play')
-    }
+    start: () => game.state.start('play')
+
 
 
 };
+
+
+var pauseMenuState = {
+    create: () =>
+    {
+        pauseText.visible = true;
+        game.paused = true;
+        pKey.onDown.addOnce(pauseMenuState.unpause, this)
+    },
+    unpause: () => {
+        game.paused = false;
+        pauseText.visible = false;
+    }
+};
+
 
 
 var playState = {
     create: () =>
     {
         canvas = game.add.tileSprite(0,0, 800,600, 'space');
+        createText();
+        bindControls();
         makeBricks();
         makePaddle('paddle_big.png'); // from atlas
         makeBall('ball_1.png');
-        createText();
-        bindControls();
+
 
     },
     update: () => {
@@ -121,6 +137,7 @@ var playState = {
         }
         game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this); // null -> callback, this = context
         game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
+
     }
 };
 
@@ -130,8 +147,9 @@ var playState = {
 
 game.state.add('boot', bootState);
 game.state.add('load', loadState);
-game.state.add('mainMenu', mainMenuState);
+game.state.add('levelMenu', levelMenuState);
 game.state.add('play', playState);
+game.state.add('pause', pauseMenuState);
 game.state.start('boot');
 
 
@@ -231,7 +249,7 @@ const ballHitPaddle = (_ball, _paddle) => {
 /*** GAME SETUP ***/
 
 //TODO: figure out how we are getting the data and refactor
-const makeBricks = function() {
+const makeBricks = () => {
     bricks = game.add.group(); // phaser lets you group objects - docs for extra methods
     bricks.enableBody = true; // enables a body to allow collision
     bricks.physicsBodyType = Phaser.Physics.ARCADE; // does the same for groups as game.physics.enable
@@ -281,12 +299,16 @@ const createText = () => {
     bonusText = game.add.text(400, 550, 'bonusscore: 0', fontObject);
     introText = game.add.text(game.world.centerX, 400, '- press SPACE to start -', fontObject.align = "center");
     introText.anchor.setTo(0.5, 0.5);
+    pauseText = game.add.text(game.x,game.y, `press P to continue`, fontObject);
+    pauseText.visible = false;
 };
 
 const bindControls = () => {
     spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spaceKey.onDown.add(releaseBall, this);
     cursors = game.input.keyboard.createCursorKeys();
+    pKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+    pKey.onDown.add(pauseMenuState.create, this);
 };
 
 
