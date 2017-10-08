@@ -6,9 +6,10 @@ body{
 
     font-family: 'Stalinist One', cursive;
     color: white;
+}
+#mainMenu, #game, #levelpicker{
     text-align: center;
 }
-
 h1{
     font-size: 3rem;
 }
@@ -66,6 +67,21 @@ video{
 /***********************************************************************************************************************
                                         level
 ***********************************************************************************************************************/
+#text br{
+    display: block;
+    margin-bottom: 1.5em;
+    content: " ";
+}
+#text, #text+p{
+    margin-top: 50px;
+    margin-right: 50px;
+    font-family: 'Orbitron', sans-serif;
+    height: 70vh;
+    font-size: 1.5rem;
+    color: lime;
+    /*background-color: black;*/
+}
+
 .hidden{
  display: none;
 }

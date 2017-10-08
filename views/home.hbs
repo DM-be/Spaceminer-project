@@ -5,6 +5,7 @@
     <title>Space Breakout</title>
     <link rel="stylesheet" href="/views/assets/css/screen.css">
     <link href="https://fonts.googleapis.com/css?family=Stalinist+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     <script type="text/javascript" src="/phaser.js"></script>
     <style type="text/css">
         body {
@@ -20,7 +21,7 @@
 </head>
 <body>
 
-<audio autoplay loop >
+<audio autoplay loop>
     <source src="/views/assets/images/bgmusic.mp3" type="audio/mp3">
 </audio>
 <div id="mainMenu"><h1>Space Snes Breakout</h1>
@@ -45,11 +46,16 @@
                    <figcaption>level 3</figcaption>
                </figure>
            </a></div>
+
+<div id="firstcutscene" class="hidden"><div id="text"></div>
+    <p>Press enter to continue</p>
+</div>
 <div id="game" class="hidden">
     <div id="gameDiv"></div>
 </div>
 
 <script type="text/javascript" src="/views/assets/js/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
 <script type="text/javascript" src="/views/assets/js/script.js"></script>
 <script type="text/javascript" src="/refactoredscript.js"></script>
 
