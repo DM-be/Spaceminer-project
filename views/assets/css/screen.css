@@ -72,11 +72,15 @@ video{
     margin-bottom: 1.5em;
     content: " ";
 }
-#text, #text+p{
+
+#text{
+    height: 70vh;
+}
+#text, #skip{
     margin-top: 50px;
     margin-right: 50px;
+
     font-family: 'Orbitron', sans-serif;
-    height: 70vh;
     font-size: 1.5rem;
     color: lime;
     /*background-color: black;*/
