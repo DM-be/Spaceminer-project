@@ -1,4 +1,16 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv', {preload: preload, create: create, update: update});
+//var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameDiv', {preload: preload, create: create, update: update});
+
+
+//TODO: refactor everything but the controller into separate files
+
+var game = new Phaser.Game(800,600, Phaser.AUTO, 'gameDiv');
+
+
+
+/*** GLOBALS **/
+
+//TODO: defines these in relevant states
+
 
 var ball;
 var paddle;
@@ -21,56 +33,112 @@ var introText;
 var bonusText;
 var cursors;
 
-function preload() {
 
-    game.load.atlas('breakout', 'breakout.png', 'breakout.json');
-    game.load.atlas('breakout2', 'arkinoid.png', 'breakout2.json');
-    game.load.image('space', 'snesbg.png');
-    game.load.image('brick0', 'brick0.png');
-    game.load.image('brick1', 'brick1.png');
-    game.load.image('brick2', 'brick2.png');
-    game.load.image('brick3', 'brick3.png');
-    game.load.image('brick4', 'brick4.png');
-    game.load.image('brick4_2', 'brick4_2.png');
-    game.load.image('brick5', 'brick5.png');
-    game.load.image('paddle', 'paddle.png');
-    game.load.image('ball', 'ball.png');
-}
 
-function create() {
-    game.physics.startSystem(Phaser.Physics.ARCADE); // start physics library
-    game.physics.arcade.checkCollision.down = false; // check collisions against walls except bottom
 
-    canvas = game.add.tileSprite(0,0, 800,600, 'space'); // paint the canvas
-   //  canvas = game.add.sprite(0,0 , 'space');
-   //  canvas.width = game.width;
-   //  canvas.height = game.height;
-    makeBricks();
-    makePaddle('paddle_big.png'); // from atlas
-    makeBall('ball_1.png');
-    createText();
-    bindControls();
-}
 
-function update() {
-    if (cursors.left.isDown) {
-        paddle.x -= 7;
-        if (ballOnPaddle) {
-            ball.body.x = paddle.x;
-        }
+var level = "Level 1";
+
+var fontObject = {
+
+    font: "16px Stalinist One", fill: "#ffffff", align: "left"
+};
+
+
+
+/*** STATES **/
+
+const bootState = {
+    create: () =>
+   {
+       game.physics.startSystem(Phaser.Physics.ARCADE); // start physics library
+       game.physics.arcade.checkCollision.down = false;
+       game.state.start('load');
     }
-    else if (cursors.right.isDown) {
-        paddle.x += 7;
-        if (ballOnPaddle) {
-            ball.body.x = paddle.x;
-        }
-    }
-    game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this); // null -> callback, this = context
-    game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
+};
 
-}
+
+const loadState = {
+
+    preload: () => {
+        game.add.text(game.x, game.y, 'loading...', fontObject);
+        game.load.atlas('breakout', 'breakout.png', 'breakout.json');
+        game.load.atlas('breakout2', 'arkinoid.png', 'breakout2.json');
+        game.load.image('space', 'snesbg.png');
+        game.load.image('brick0', 'brick0.png');
+        game.load.image('brick1', 'brick1.png');
+        game.load.image('brick2', 'brick2.png');
+        game.load.image('brick3', 'brick3.png');
+        game.load.image('brick4', 'brick4.png');
+        game.load.image('brick4_2', 'brick4_2.png');
+        game.load.image('brick5', 'brick5.png');
+        game.load.image('paddle', 'paddle.png');
+        game.load.image('ball', 'ball.png');
+    },
+    create: () =>  {
+        game.state.start('mainMenu')
+    }
+};
+
+var mainMenuState = {
+    create: () =>  {
+        game.add.text(game.x,game.y, `level: ${level}, this is a placeholder press P to exit this state`, fontObject);
+        const pKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+        pKey.onDown.addOnce(mainMenuState.start, this);
+
+    },
+    start: () => {
+        game.state.start('play')
+    }
+
+
+};
+
+
+var playState = {
+    create: () =>
+    {
+        canvas = game.add.tileSprite(0,0, 800,600, 'space');
+        makeBricks();
+        makePaddle('paddle_big.png'); // from atlas
+        makeBall('ball_1.png');
+        createText();
+        bindControls();
+
+    },
+    update: () => {
+        if (cursors.left.isDown) {
+            paddle.x -= 7;
+            if (ballOnPaddle) {
+                ball.body.x = paddle.x;
+            }
+        }
+        else if (cursors.right.isDown) {
+            paddle.x += 7;
+            if (ballOnPaddle) {
+                ball.body.x = paddle.x;
+            }
+        }
+        game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this); // null -> callback, this = context
+        game.physics.arcade.collide(ball, bricks, ballHitBrick, null, this);
+    }
+};
+
+
+/*** CONTROLLER **/
+
+
+game.state.add('boot', bootState);
+game.state.add('load', loadState);
+game.state.add('mainMenu', mainMenuState);
+game.state.add('play', playState);
+game.state.start('boot');
+
+
 
 /*** GAME LOGIC **/
+
+
 
 const releaseBall = () => {
     if (ballOnPaddle) {
@@ -101,7 +169,6 @@ const ballLost = () => {
 };
 
 const gameOver = () => {
-
     ball.body.velocity.setTo(0, 0);
     introText.text = 'Game Over!';
     introText.visible = true;
@@ -109,14 +176,12 @@ const gameOver = () => {
 
 
 const ballHitBrick = (_ball, _brick) => {
-    console.log(_brick.sort);
     if (_brick.health > 1) {
         _brick.kill();
         _brick = bricks.create(_brick.position.x, _brick.position.y, 'brick4_2', 'brick4_2.png');
         _brick.body.bounce.set(1); // The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
         _brick.body.immovable = true; // An immovable Body will not receive any impacts from other bodies.
         _brick.health = 1;
-        console.log(_brick.health);
     } else {
         _brick.kill();
     }
@@ -140,7 +205,6 @@ const ballHitBrick = (_ball, _brick) => {
         _ball.animations.stop();
         bricks.callAll('revive'); // reset group to original group
     }
-
 };
 
 const ballHitPaddle = (_ball, _paddle) => {
@@ -160,7 +224,6 @@ const ballHitPaddle = (_ball, _paddle) => {
     else { // ball in exact middle --> random x to prevent bouncing straight up
         _ball.body.velocity.x = 2 + Math.random() * 8;
         console.log("dead center: " + _ball.body.velocity.x)
-
     }
 };
 
@@ -168,7 +231,7 @@ const ballHitPaddle = (_ball, _paddle) => {
 /*** GAME SETUP ***/
 
 //TODO: figure out how we are getting the data and refactor
-const makeBricks = () => {
+const makeBricks = function() {
     bricks = game.add.group(); // phaser lets you group objects - docs for extra methods
     bricks.enableBody = true; // enables a body to allow collision
     bricks.physicsBodyType = Phaser.Physics.ARCADE; // does the same for groups as game.physics.enable
@@ -176,10 +239,8 @@ const makeBricks = () => {
     for (var y = 0; y < incomingJson.numberOfRows; y++) {
         for (var x = 0; x < incomingJson.numberOfBricks; x++) {
             var sort = Math.floor((Math.random() * 5) + 0);
-
             brick = bricks.create(120 + (x * 36), 100 + (y * 52), 'brick' + sort, 'brick' + sort + '.png');  // x - y - png
             // var sort = 5;
-
             brick.body.bounce.set(1); // The elasticity of the Body when colliding. bounce.x/y = 1 means full rebound, bounce.x/y = 0.5 means 50% rebound velocity.
             brick.body.immovable = true; // An immovable Body will not receive any impacts from other bodies.
             if (sort == 4) {
@@ -191,8 +252,6 @@ const makeBricks = () => {
 
 
 const makePaddle = (sprite) => {
-
-
     paddle = game.add.sprite(game.world.centerX, 500, 'breakout2', 'paddle_ark.png');// add sprite on x and y
     paddle.anchor.setTo(0.5,0.5); // set position of the texture relative to xy ----> centers texture to object http://www.goodboydigital.com/pixijs/docs/classes/Sprite.html#property_pivot
     game.physics.enable(paddle, Phaser.Physics.ARCADE); // enables the physics onto the paddle
@@ -203,7 +262,7 @@ const makePaddle = (sprite) => {
 
 
 const makeBall = (sprite) => {
-    ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'ball', "ball.png"); // TO DO
+    ball = this.game.add.sprite(game.world.centerX, paddle.y - 16, 'ball', "ball.png"); // TO DO
     ball.anchor.setTo(0.5, 0.5);
     ball.checkWorldBounds = true; // https://phaser.io/docs/2.3.0/Phaser.Component.InWorld.html
     game.physics.enable(ball, Phaser.Physics.ARCADE);
@@ -215,16 +274,12 @@ const makeBall = (sprite) => {
     ball.events.onOutOfBounds.add(ballLost, this); // ball drops below bottom -  triggers onOutOfBounds --> reset it
 };
 
-//TODO how to decide what text we render, maybe pass in arguments
+//TODO refactor into different states, add text content and location as parameters
 const createText = () => {
-    scoreText = game.add.text(32, 550, 'score: 0', {font: "16px Stalinist One", fill: "#ffffff", align: "left"});
-    livesText = game.add.text(680, 550, 'lives: 3', {font: "16px Stalinist One", fill: "#ffffff", align: "left"});
-    bonusText = game.add.text(400, 550, 'bonusscore: 0', {font: "16px Stalinist One", fill: "#ffffff", align: "left"});
-    introText = game.add.text(game.world.centerX, 400, '- press SPACE to start -', {
-        font: "30px Stalinist One",
-        fill: "#ffffff",
-        align: "center"
-    });
+    scoreText = game.add.text(32, 550, 'score: 0', fontObject);
+    livesText = game.add.text(680, 550, 'lives: 3', fontObject);
+    bonusText = game.add.text(400, 550, 'bonusscore: 0', fontObject);
+    introText = game.add.text(game.world.centerX, 400, '- press SPACE to start -', fontObject.align = "center");
     introText.anchor.setTo(0.5, 0.5);
 };
 
@@ -233,6 +288,12 @@ const bindControls = () => {
     spaceKey.onDown.add(releaseBall, this);
     cursors = game.input.keyboard.createCursorKeys();
 };
+
+
+
+
+
+
 
 
 
