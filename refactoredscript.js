@@ -280,7 +280,7 @@ const makePaddle = (sprite) => {
 
 
 const makeBall = (sprite) => {
-    ball = this.game.add.sprite(game.world.centerX, paddle.y - 16, 'ball', "ball.png"); // TO DO
+    ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'ball', "ball.png"); // TO DO
     ball.anchor.setTo(0.5, 0.5);
     ball.checkWorldBounds = true; // https://phaser.io/docs/2.3.0/Phaser.Component.InWorld.html
     game.physics.enable(ball, Phaser.Physics.ARCADE);
