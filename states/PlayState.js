@@ -1,7 +1,8 @@
 
+let ball;
+let bricks;
 
-
-const playState = {
+const level1PlayState = {
 
     preload: function()
     {
@@ -9,9 +10,10 @@ const playState = {
       canvas = game.add.tileSprite(0,0, 800,600, 'space');
       createText();
       bindControls();
-      makeBricks();
+      bricks = makeBricks();
       makePaddle('paddle_big.png');
-      makeBall('ball_1.png');
+      ball = makeBall();
+
 
     },
     update: function() {

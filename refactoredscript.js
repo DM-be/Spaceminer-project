@@ -19,9 +19,9 @@ var bonusText;
 var cursors;
 var pKey;
 var pauseText;
-var ball;
+
 var paddle;
-var bricks;
+
 var numberOfBricksHit = 0;
 var bonusScore = 0;
 var score = 0;

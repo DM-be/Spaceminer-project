@@ -1,8 +1,13 @@
 /*** GAME SETUP ***/
 
 //TODO: figure out how we are getting the data and refactor
-const makeBricks = () => {
-    bricks = game.add.group(); // phaser lets you group objects - docs for extra methods
+const makeBricks = (options) => {
+
+    options = incomingJson; // make brick based on some options (returned from server)
+    //TODO: implement options based on server data
+
+
+    let bricks = game.add.group(); // phaser lets you group objects - docs for extra methods
     bricks.enableBody = true; // enables a body to allow collision
     bricks.physicsBodyType = Phaser.Physics.ARCADE; // does the same for groups as game.physics.enable
 
@@ -18,6 +23,9 @@ const makeBricks = () => {
             }
         }
     }
+    return bricks;
+
+
 };
 
 
@@ -32,7 +40,7 @@ const makePaddle = (sprite) => {
 
 
 const makeBall = () => {
-    ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'ball', "ball.png"); // TO DO
+    let ball = game.add.sprite(game.world.centerX, paddle.y - 16, 'ball', "ball.png"); // TO DO
     ball.anchor.setTo(0.5, 0.5);
     ball.checkWorldBounds = true; // https://phaser.io/docs/2.3.0/Phaser.Component.InWorld.html
     game.physics.enable(ball, Phaser.Physics.ARCADE);
@@ -42,6 +50,7 @@ const makeBall = () => {
     ball.body.bounce.set(1);
     ball.animations.add('spin', ['ball.png', 'ball.png', 'ball.png', 'ball.png', 'ball.png'], 50, true, false) // we can call this with .play later
     ball.events.onOutOfBounds.add(ballLost, this); // ball drops below bottom -  triggers onOutOfBounds --> re
+    return ball;
 };
 
 

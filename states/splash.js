@@ -12,7 +12,7 @@ const splash =  {
 
     addGamestates: () => {
         game.state.add('levelMenu', levelMenuState);
-        game.state.add('play', playState);
+        game.state.add('level1', level1PlayState);
         game.state.add('pause', pauseMenuState);
     },
 
@@ -67,7 +67,7 @@ const splash =  {
         this.addGamestates();
 
         setTimeout(() => {
-            game.state.start('levelMenu');
+            game.state.start('level1');
         }, 4000)
 
     },
