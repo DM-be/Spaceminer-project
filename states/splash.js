@@ -47,8 +47,8 @@ const splash =  {
         this.backGround = game.make.sprite(0,0, 'stars');
         this.logo = game.make.sprite(game.world.centerX, 200,  'logo');
         this.status = game.make.text(game.world.centerX, 380, 'loading...' , {fill: 'white'});
-        utils.centerGameObject(this.logo);
-        utils.centerGameObject(this.status);
+        utils.centerGameObjects([this.logo, this.status]);
+
     },
     preload: function() {
         game.add.existing(this.backGround);
