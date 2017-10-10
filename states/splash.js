@@ -2,18 +2,20 @@
 const splash =  {
 
     loadScripts: () => {
-        game.load.script('playState', '/states/PlayState.js');
+        game.load.script('level1playState', '/states/level1PlayState.js');
         game.load.script('gameLogic', '/game/gameLogic.js');
         game.load.script('gameSetup', '/game/gameSetup.js');
         game.load.script('levelMenu', '/states/levelMenuState.js');
-        game.load.script('pauseMenuState', '/states/pauseMenuState.js' )
+        game.load.script('pauseMenuState', '/states/pauseMenuState.js' );
+        game.load.script('gameMenu', '/states/gameMenu.js')
 
     },
 
     addGamestates: () => {
         game.state.add('levelMenu', levelMenuState);
-        game.state.add('level1', level1PlayState);
+        game.state.add('level1PlayState', level1PlayState);
         game.state.add('pause', pauseMenuState);
+        game.state.add('gameMenu', gameMenu)
     },
 
     loadImages: () => {
@@ -67,7 +69,8 @@ const splash =  {
         this.addGamestates();
 
         setTimeout(() => {
-            game.state.start('level1');
+
+            game.state.start('gameMenu');
         }, 4000)
 
     },
