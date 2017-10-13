@@ -3,7 +3,7 @@
 
 
 
-var game = new Phaser.Game(800,600, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(1200,800, Phaser.AUTO, 'gameDiv');
 
 
 
@@ -67,7 +67,10 @@ game.state.start('Main');
 
 
 
-
+// scoreText = game.add.text(32, 550, 'score: 0', fontObject);
+// livesText = game.add.text(680, 550, 'lives: 3', fontObject);
+// bonusText = game.add.text(400, 550, 'bonusscore: 0', fontObject);
+//
 
 
 
