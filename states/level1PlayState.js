@@ -18,9 +18,7 @@ const level1PlayState = {
     },
     create: function () {
       game.world.setBounds((game.width - canvas.width) / 2,0, 800,600); // camera bounds get reset to the current world!
-        game.camera.width = game.width;
-       // game.camera.height = game.height;
-        game.camera.bounds.x = 0; // this would get 100 from the world, set it to 0 so we can show the rest
+      game.camera.bounds.x = 0; // this would get 200 from the world, set it to 0 so we can show the rest
        // game.world.camera.reset()
 
     },
