@@ -1,4 +1,4 @@
-# spaceout-project
+# Spaceminer-project
 A web based game made in the Phaser framework.
 ## Description
 
