@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^4.16.0",
     "fs": "0.0.1-security",
-    "hbs": "^4.0.1",
+    "hbs": "^4.2.0",
     "phaser-ce": "^2.8.8"
   }
 }
